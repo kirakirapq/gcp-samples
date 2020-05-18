@@ -1,0 +1,15 @@
+runtime: python37
+env: standard
+service: default
+entrypoint: gunicorn -b :$PORT main:app
+
+env_variables:
+  # 環境変数を追加
+  BUCKET_NAME: 
+  PROJECT_ID: 
+
+automatic_scaling:
+  min_idle_instances: automatic
+  max_idle_instances: automatic
+  min_pending_latency: automatic
+  max_pending_latency: automatic
