@@ -22,7 +22,7 @@ from google.cloud import pubsub_v1
 
 # [END pubsub_quickstart_sub_deps]
 
-def create_sub(project_id: str, topic_name: str, subscription_name: str):
+def register_subscription(project_id: str, topic_name: str, subscription_name: str):
     """create subscription
 
     Arguments:
@@ -45,11 +45,14 @@ def create_sub(project_id: str, topic_name: str, subscription_name: str):
     subscriber.close()
 
 def sub(project_id: str, subscription_name: str):
-    """get subscription data
+    """get message
 
     Arguments:
         project_id {str} -- [description]
         subscription_name {str} -- [description]
+
+    Returns:
+        list -- message.message_id and message.data
     """
     # [START pubsub_quickstart_sub_client]
     # Initialize a Subscriber client
@@ -61,22 +64,19 @@ def sub(project_id: str, subscription_name: str):
         project_id, subscription_name
     )
 
+    timeout=5.0
+    result = dict()
     def callback(message):
-        logging.info(
-            "Received message {} of message ID {}\n".format(
-                message, message.message_id
-            )
+        logging.warning(
+            "Received message {} of message ID {}\n".format(message, message.message_id)
         )
         # Acknowledge the message. Unack'ed messages will be redelivered.
         message.ack()
-
-        logging.info("Acknowledged message {}\n".format(message.message_id))
-        print("Acknowledged message {}\n".format(message.message_id))
+        return message
 
     streaming_pull_future = subscriber_client.subscribe(
         subscription_path, callback=callback
     )
-    logging.info("Listening for messages on {}..\n".format(subscription_path))
 
     try:
         # Calling result() on StreamingPullFuture keeps the main thread from
@@ -84,11 +84,68 @@ def sub(project_id: str, subscription_name: str):
         result = streaming_pull_future.result()
 
         # logging.warning("streaming_pull_future.result: {}".format(result))
-    except:  # noqa
-        logging.exception("streaming_pull_future exeption")
+    except Exception as e:  # noqa
+        logging.exception(
+            "Listening for messages on {} threw an exception: {}.".format(
+                subscription_name, e
+            )
+        )
         streaming_pull_future.cancel()
+    
+
+    logging.warning(result)
 
     subscriber_client.close()
+
+    return result
+
+def sync_sub(project_id: str, subscription_name: str):
+    """同期取得
+
+    Arguments:
+        project_id {str} -- [description]
+        subscription_name {str} -- [description]
+
+    Returns:
+        list -- public_message
+    """
+    subscriber = pubsub_v1.SubscriberClient()
+    subscription_path = subscriber.subscription_path(
+        project_id, subscription_name
+    )
+
+    NUM_MESSAGES = 3
+
+    # The subscriber pulls a specific number of messages.
+    response = subscriber.pull(subscription_path, max_messages=NUM_MESSAGES)
+
+    if not response or len(response.received_messages) == 0:
+        return []
+
+    public_message = []
+    ack_ids = []
+    for received_message in response.received_messages:
+        logging.info("Received: {}".format(received_message.message.data))
+        ack_ids.append(received_message.ack_id)
+        public_message.append(
+            {
+                "message_id": received_message.message.message_id,
+                "message_data": received_message.message.data.decode("utf-8")
+            }
+        )
+
+    # Acknowledges the received messages so they will not be sent again.
+    subscriber.acknowledge(subscription_path, ack_ids)
+
+    logging.info(
+        "Received and acknowledged {} messages. Done.".format(
+            len(response.received_messages)
+        )
+    )
+
+    subscriber.close()
+
+    return public_message
 
 
 if __name__ == "__main__":

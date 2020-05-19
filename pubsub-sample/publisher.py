@@ -27,7 +27,7 @@ def get_topics_list(project_id: str):
     #     print(topic)
     # [END pubsub_list_topics]
 
-def create_topic(project_id: str, topic_name: str):
+def register_topic(project_id: str, topic_name: str):
     """Create a new Pub/Sub topic.
 
     Arguments:
@@ -42,7 +42,7 @@ def create_topic(project_id: str, topic_name: str):
 
     logging.info("Topic created: {}".format(topic))
 
-def delete_topic(project_id: set, topic_name: str):
+def delete(project_id: set, topic_name: str):
     """delete message
 
     Arguments:
@@ -59,7 +59,7 @@ def delete_topic(project_id: set, topic_name: str):
     # [END pubsub_delete_topic]
 
 
-def publish_messages(project_id: str, topic_name: str, message: str):
+def publish_message(project_id: str, topic_name: str, message: str):
     """Publishes message
 
     Arguments:
