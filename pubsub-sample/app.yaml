@@ -5,7 +5,9 @@ entrypoint: gunicorn -b :$PORT main:app
 
 env_variables:
   # project id
-  PROJECT_ID: 
+  PROJECT_ID:
+  FLASK_ENV: development
+  DEBUG: True
 
 automatic_scaling:
   min_idle_instances: automatic
