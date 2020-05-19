@@ -119,6 +119,9 @@ def sync_sub(project_id: str, subscription_name: str):
     # The subscriber pulls a specific number of messages.
     response = subscriber.pull(subscription_path, max_messages=NUM_MESSAGES)
 
+    if not response or len(response.received_messages) == 0:
+        return []
+
     public_message = []
     ack_ids = []
     for received_message in response.received_messages:
