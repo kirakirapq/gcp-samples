@@ -12,6 +12,7 @@ app.config['JSON_AS_ASCII'] = False
 
 ALLOWED_EXTENSIONS = {'csv'}
 
+
 @app.route('/_ah/push-handlers//topic/create',  methods=['POST'])
 def add_topic():
     payload = request.json
@@ -23,6 +24,7 @@ def add_topic():
     return jsonify({
         "result": "201 Created"
     })
+
 
 @app.route('/_ah/push-handlers//push',  methods=['POST'])
 def push_message():
@@ -41,6 +43,7 @@ def push_message():
         "result": "201 Created"
     })
 
+
 @app.route('/_ah/push-handlers//get',  methods=['POST'])
 def pull_messages():
     payload = request.json
@@ -52,6 +55,7 @@ def pull_messages():
 
     return Response(json.dumps(message),  mimetype='application/json')
 
+
 @app.route('/_ah/push-handlers//subscription/create',  methods=['POST'])
 def add_subscription():
     payload = request.json
@@ -61,6 +65,7 @@ def add_subscription():
     project_id = os.environ.get('PROJECT_ID')
 
     register_subscription(project_id, topic_name, subscription_name)
+
 
 if __name__ == '__main__':
     app.run()

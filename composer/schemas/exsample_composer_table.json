@@ -1,0 +1,14 @@
+[
+  {
+    "mode": "nullable",
+    "name": "id",
+    "type": "string",
+    "description": "table id"
+  },
+  {
+    "mode": "nullable",
+    "name": "name",
+    "type": "string",
+    "description": "table id"
+  }
+]
