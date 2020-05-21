@@ -61,6 +61,6 @@ def add_subscription():
     project_id = os.environ.get('PROJECT_ID')
 
     register_subscription(project_id, topic_name, subscription_name)
- 
+
 if __name__ == '__main__':
-  app.run()
+    app.run()
