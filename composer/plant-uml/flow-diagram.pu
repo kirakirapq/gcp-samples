@@ -1,0 +1,5 @@
+@startuml
+start
+:from_exsample-composer-gcs_import_bigquery;
+end
+@enduml

@@ -1,0 +1,17 @@
+@startuml
+database exsample_composer_table as bq_table
+
+storage "exsample-composer-schemas" as schema_backet {
+  file bq_schema_file
+}
+
+storage "exsample-composer-gcs" as export_backet {
+  file target_file
+}
+
+agent gke_pods
+
+gke_pods --> bq_schema_file:1. スキーマ取得
+gke_pods --> target_file:2. ロードファイル取得
+gke_pods --> bq_table: 3. BigQueryへデータをロード
+@enduml
