@@ -1,0 +1,37 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: dev-sample-job-manager
+  namespace: bq-sample
+spec:
+  schedule: "00 09 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          volumes:
+          - name: google-cloud-key
+            secret:
+              secretName: bq-sample
+          containers:
+          - name: develop-my-space
+            image: gcr.io/minarai-gcp/bq-sample:development
+            imagePullPolicy: Always
+            volumeMounts:
+            - name: google-cloud-key
+              mountPath: /var/secrets/google
+            env:
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: "/var/secrets/google/key.json"
+            - name: PROJECT
+              value: "xxxxxxxxxx"
+            - name: CLUSTER
+              value: "sample-cluster"
+            - name: NAMESPACE
+              value: "bq-sample"
+            - name: DEPLOY_ENV
+              value: "dev"
+            command: ["/bin/sh","-c"]
+            args: ["gcloud auth activate-service-account --key-file /var/secrets/google/key.json && sh job_manager.sh"]
+
+          restartPolicy: OnFailure

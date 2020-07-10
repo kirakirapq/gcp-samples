@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: dev-sample-yyyymmdd
+  namespace: bq-sample
+spec:
+  template:
+    spec:
+      volumes:
+      - name: google-cloud-key
+        secret:
+          secretName: bq-sample
+      containers:
+      - name: dev-sample-yyyymmdd
+        image: gcr.io/xxxxxxxxxx/bq-sample:development
+        imagePullPolicy: Always
+        volumeMounts:
+        - name: google-cloud-key
+          mountPath: /var/secrets/google
+        env:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: "/var/secrets/google/key.json"
+        command: ["/bin/sh","-c"]
+        args: ["gcloud auth activate-service-account --key-file /var/secrets/google/key.json && python3 ./app/sample.py"]
+
+      restartPolicy: OnFailure
