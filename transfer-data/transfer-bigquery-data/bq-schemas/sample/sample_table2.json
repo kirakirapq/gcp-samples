@@ -1,0 +1,20 @@
+[
+  {
+    "mode": "NULLABLE",
+    "name": "app_token",
+    "type": "String",
+    "description": ""
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "app_name",
+    "type": "String",
+    "description": ""
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "os_name",
+    "type": "String",
+    "description": ""
+  }
+]

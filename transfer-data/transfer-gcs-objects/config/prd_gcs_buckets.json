@@ -1,0 +1,33 @@
+{
+	"sample1": [
+		{
+			"bucket_name": "バケット名",
+			"destination_bucket_name": "転送先バケット名",
+			"attach_member": {
+				"member_type": "serviceAccount",
+				"member_name": "サービスアカウント名@プロジェクトID.iam.gserviceaccount.com",
+				"iam_role": "roles/storage.admin"
+			}
+		}
+	],
+	"sample2": [
+		{
+			"bucket_name": "バケット名",
+			"destination_bucket_name": "転送先バケット名",
+			"attach_member": {
+				"member_type": "serviceAccount",
+				"member_name": "サービスアカウント名@プロジェクトID.iam.gserviceaccount.com",
+				"iam_role": "roles/storage.admin"
+			}
+		},
+		{
+			"bucket_name": "バケット名",
+			"destination_bucket_name": "転送先バケット名",
+			"attach_member": {
+				"member_type": "serviceAccount",
+				"member_name": "サービスアカウント名@プロジェクトID.iam.gserviceaccount.com",
+				"iam_role": "roles/storage.admin"
+			}
+		}
+	]
+}

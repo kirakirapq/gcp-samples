@@ -1,0 +1,54 @@
+{
+	"任意のサービス名 *サービス名はスキーマディレクトリ内のディレクトリ名と同じサービス名をつけてください": [
+		{
+			"dataset_name": "転送元のデータセット名",
+			"destination_dataset_name": "転送先のデータセット名",
+			"tables": [
+				{
+					"name": "テーブル名",
+					"schema": "スキーマ.json * [../bq-schemas/サービス名/スキーマ.json]を指定してください",
+					"partitioning": true,
+					"time_partitioning_field": "date",
+					"time_partitioning_expiration": 0,
+					"require_partition_filter": false,
+					"description": ""
+				},
+			]
+		}
+	],
+	"[例]サービス": [
+		{
+			"dataset_name": "sample_dataset_tokyo",
+			"destination_dataset_name": "sample_dataset_us_east1",
+			"tables": [
+				{
+					"name": "logs",
+					"schema": "logs",
+					"partitioning": true,
+					"time_partitioning_field": "",
+					"time_partitioning_expiration": 0,
+					"require_partition_filter": true,
+					"description": ""
+				},
+				{
+					"name": "users",
+					"schema": "users",
+					"partitioning": true,
+					"time_partitioning_field": "",
+					"time_partitioning_expiration": 0,
+					"require_partition_filter": true,
+					"description": ""
+				},
+				{
+					"name": "books",
+					"schema": "books",
+					"partitioning": true,
+					"time_partitioning_field": "create_at",
+					"time_partitioning_expiration": 0,
+					"require_partition_filter": true,
+					"description": ""
+				}
+			]
+		}
+	]
+}

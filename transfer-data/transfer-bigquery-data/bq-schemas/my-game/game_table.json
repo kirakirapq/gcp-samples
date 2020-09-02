@@ -1,0 +1,44 @@
+[
+  {
+    "mode": "NULLABLE",
+    "name": "app_id",
+    "type": "String",
+    "description": ""
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "product_code",
+    "type": "String",
+    "description": ""
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "gamelib_code",
+    "type": "String"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "os_name",
+    "type": "String"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "gamelib_uuid",
+    "type": "String"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "user_id",
+    "type": "String"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "created_at_unix",
+    "type": "Integer"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "environment",
+    "type": "String"
+  }
+]

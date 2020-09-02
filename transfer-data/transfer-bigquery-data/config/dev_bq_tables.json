@@ -1,0 +1,45 @@
+{
+	"sample": [
+		{
+			"dataset_name": "sample_dataset_asia_northast1",
+			"destination_dataset_name": "sample_dataset_us_east1",
+			"tables": [
+				{
+					"name": "sample_table1",
+					"schema": "sample_table1.json",
+					"partitioning": true,
+					"time_partitioning_field": "date",
+					"time_partitioning_expiration": 0,
+					"require_partition_filter": false,
+					"description": ""
+				},
+				{
+					"name": "sample_table2",
+					"schema": "sample_table2.json",
+					"partitioning": true,
+					"time_partitioning_field": "date",
+					"time_partitioning_expiration": 0,
+					"require_partition_filter": true,
+					"description": ""
+				}
+			]
+		}
+	],
+	"my-game": [
+		{
+			"dataset_name": "my_game",
+			"destination_dataset_name": "dev_us_east1_ua_report",
+			"tables": [
+				{
+					"name": "game_table",
+					"schema": "game_table.json",
+					"partitioning": true,
+					"time_partitioning_field": "",
+					"time_partitioning_expiration": 0,
+					"require_partition_filter": true,
+					"description": ""
+				}
+			]
+		}
+	]
+}
