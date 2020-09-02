@@ -86,9 +86,7 @@ if __name__ == '__main__':
                 bucket_name = bucket['bucket_name']
                 destination_bucket_name = bucket['destination_bucket_name']
 
-                member_type = bucket['attach_member']['member_type']
-                member_name = bucket['attach_member']['member_name']
-                iam_role = bucket['attach_member']['iam_role']
+                is_attach_member = bucket['attach_member']['is_attach_member']
 
                 try:
                     Log.info('Create GCS bucket', 'bucket_name: {}'.format(
@@ -124,23 +122,30 @@ if __name__ == '__main__':
                     ls = 'gsutil ls gs://{}'.format(destination_bucket_name)
                     check_res = subprocess.getoutput(ls)
 
-                    member_op_count = 0
-                    member_op_limit = 3
-                    while member_op_count < member_op_limit:
-                        response = attachMember(
-                            member_type, member_name, iam_role, destination_bucket_name)
-                        if response['is_success'] == True:
-                            Log.info('Attach Member', 'Success Operation: {}'.format(
-                                destination_bucket_name))
-                            break
-                        if member_op_count == 2:
-                            Log.error('Attach Member', response['description'])
-                        else:
-                            Log.warning('Attach Member',
-                                        response['description'])
-                            sleep(60)
+                    if is_attach_member is True:
+                        for member in bucket['attach_member']['members']:
+                            member_type = member['member_type']
+                            member_name = member['member_name']
+                            iam_role = member['iam_role']
 
-                        member_op_count += 1
+                            member_op_count = 0
+                            member_op_limit = 3
+                            while member_op_count < member_op_limit:
+                                response = attachMember(
+                                    member_type, member_name, iam_role, destination_bucket_name)
+                                if response['is_success'] == True:
+                                    Log.info('Attach Member', 'Success Operation: {}'.format(
+                                        destination_bucket_name))
+                                    break
+                                if member_op_count == 2:
+                                    Log.error('Attach Member',
+                                              response['description'])
+                                else:
+                                    Log.warning('Attach Member',
+                                                response['description'])
+                                    sleep(60)
+
+                                member_op_count += 1
 
                 except Exception as e:
                     Log.error('Failure Operation', traceback.format_exc())

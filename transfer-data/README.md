@@ -61,9 +61,10 @@ sample-service1=
 |  bucket_name  |  移行元バケット名  |
 |  destination_bucket_name  |  移行先バケット名  |
 |  attach_member  |  権限を追加するメンバーを登録  |
-|  attach_member.member_type |  serviceAccount  |
-|  attach_member.member_name |  アカウント名  |
-|  attach_member.iam_role |  IAMロール  |
+|  attach_member.is_attach_member  |  ture or false 追加する場合はtrue  |
+|  attach_member.members.member_type |  serviceAccount  |
+|  attach_member.members.member_name |  アカウント名  |
+|  attach_member.members.iam_role |  IAMロール  |
 
 * 設定例
 ```
@@ -73,9 +74,14 @@ sample-service1=
 			"bucket_name": "sample-asia-northeast1-bucket",
 			"destination_bucket_name": "sample-us-east1-bucket",
 			"attach_member": {
-				"member_type": "serviceAccount",
-				"member_name": "サービスアカウント名@プロジェクトID.iam.gserviceaccount.com",
-				"iam_role": "roles/storage.admin"
+        "is_attach_member": true,
+        "members": [
+          {
+            "member_type": "serviceAccount",
+            "member_name": "サービスアカウント名@プロジェクトID.iam.gserviceaccount.com",
+            "iam_role": "roles/storage.admin"
+          }
+        ]
 			}
 		}
 	]
